@@ -1,0 +1,37 @@
+Summary of the methods that all teams used (up until 8'th place in sub-challenge 3 - our location. Sub-challenge 3 is the most 'challenging' challenge).
+
+1'st place (OmicsEngineering) - 
+	Challenge 1&2: Gene selction is done using backward selection of genes (every time removing the gene that is most 'close' to other genes). Prediction: using MCC as we did (but with outlier removal).
+	Challenge 3: Selecting the subset of 20 genes using R genetic algorithm package. The optimization value for the algorithm is using a (multiple predictin) forest to predict the geometry of the cell location, and calculate the average Pearson Correlation R value between predicted and golden standard x y z coordinates.
+
+2'nd place (NAD) - exactly the same method as we used (MCC + ANN).
+
+2'nd place (Challengers18) -
+	Gene selection: used backward-step method for gene selection. It relies only on Euclidean geometry distance (hence not considering gene patterns in any way???).
+	Prediction model: Instead of using ANN to predict DGE->BDTNP relations, they used a PSO (optimization) algorithm. It searches for the best set of 'weights' (very simliar to ANN weights, but I think it might be more robust in this case). It uses Pearson correlation as metric (instead of our binarized_cross_entropy).
+
+3'rd place (WhatATeam) - Using MCC (only...).
+    Using MAGIC for data completion.
+	Genge selection: Starting with genes that are mostly expressed in Dorsal_ectoderm, Neurectoderm, Mesoderm, Yolk cells, and Pole cells, add more genes that are furthest away (I guess using Pearson correlation) from the selected genes, and continue adding one by one.
+	
+4'th place (DeepCMC) -
+      Sub-challenge 1&3: Idea is to use LASSO regression. It uses L1 regularization to reduce the number of features (as you decrease lambda, the number of features drops).
+      Feature selection: using LASSO (linear regression) to fit the geometry X,Y,Z.
+	  -> I think that their model is over-fitted to the data. From their writeup: "The CV was performed 20 times for 300 different values of lambda. In total, we fitted 520300 = 30,000 models."
+	  
+	  Sub-challenge 2: Using simple ANN to predict x,y,z coordinates.
+	  -> Since we tried this model and it didn't perform well, I am not sure how they received their results. Also, they didn't provide their code.
+	
+5'th place (BCBU) - Using exactly the same method as our 'geometry' model (decision forest for feature selection and prediction of x,y,z coordinates).
+                         -> Again, we showed that it is inferior to the ANN based model.
+
+6'th place (NoiseTeam) - Did only feature selection using 84 autencoders (zeroing each and every gene, and selecting the ones that gave the best auto-encoder).
+                         Final prediction is done ONLY with MCC. (How can that be??? we proved that the result with 20 genes is far away from the truth).
+						 Also, no code us provided.
+
+7'th plave (MLB) - didn't understand his writeup (very confused). Something about using liearn regression, K-nn model and PCA.
+                   Only partial code is provided.
+
+In summary:
+1) Team OmicsEngineering added an intersting GA algorithm that we should look at. Same goes with team Challengers18 that used an intersting PSO algorithm instead of ANN.
+2) Not sure how teams in 3'rd, 4'th, 5'th, 6'th and 7'th place bypassed us. For some of them we proved that their method does not work. Also they provided only partial code.

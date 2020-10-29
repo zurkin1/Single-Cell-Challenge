@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+	<head>
+		<title>Synapse | Sage Bionetworks</title>
+		<meta name="description" content="Synapse is a platform for supporting scientific collaborations centered around shared biomedical data sets.  Our goal is to make biomedical research more transparent, more reproducible, and more accessible to a broader audience of scientists.  Synapse serves as the host site for a variety of scientific collaborations, individual research projects, and DREAM challenges." />
+		<meta name='author' content='Sage Bionetworks, info@sagebase.org' />
+		<meta name="google-site-verification" content="KIO5H8Bg3i0oAEAzTEMK5qIlYJLbd2zogLs_-im4rI0" />
+		<meta name="msvalidate.01" content="E37AC1589F823723B64275D4BC890B1A" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	    <!--[if lt IE 10]>
+	    	<div class="alert alert-warning" role="alert"> 
+	    		<a class="alert-link" href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank">
+				You are using an outdated browser. For a faster, safer browsing experience, click here to upgrade today.</a>
+			</div>
+ 		<![endif]-->
+	    <!--[if lt IE 9]>
+	      <script src="bootstrap-3.0/assets/js/html5shiv.js"></script>
+	      <script src="bootstrap-3.0/assets/js/respond.min.js"></script>
+	    <![endif]-->		
+
+		<!-- 
+		Adding the following meta tag should tell the crawler to try to crawl the ugly version of *this* URL.
+		-->
+		<meta name="fragment" content="!" />
+		<meta http-equiv="x-dns-prefetch-control" content="off" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+		<!-- meta to instruct browser not to cache portal.html -->
+		<!-- http://stackoverflow.com/questions/1341089/using-meta-tags-to-turn-off-caching-in-all-browsers -->
+		<meta http-equiv="cache-control" content="max-age=0" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<!-- end cache control -->
+		
+		<link rel="icon" href="favicon.png?v=4" />
+		<link href="/opensearch.xml" rel="search" title="Synapse" type="application/opensearchdescription+xml" />
+		<link rel="manifest" href="manifest.json" />
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
+		<!-- Google Analytics -->
+		<script>
+			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+			ga('create', 'UA-29804340-1', 'auto');
+			ga('send', 'pageview');
+		</script>
+		
+		
+		
+		<script>
+			// determine cdn endpoint (staging or prod, do not use a cdn for local or dev builds)
+			var cdnEndpoint = "//cdn-" + location.hostname + "/";
+			var synapseOrgRegex = /(www|staging|tst)\.synapse\.org$/;
+			if (!synapseOrgRegex.test(location.hostname)) {
+				cdnEndpoint = "";
+			}
+			window.cdnEndpoint = cdnEndpoint;
+			
+			var link = document.createElement( "link" );
+			link.href = cdnEndpoint + "loadinglogo.css";
+			link.rel = "stylesheet";
+			document.head.appendChild(link);
+
+			var script = document.createElement('script');
+			script.onload = function () {
+				head.load(cdnEndpoint + "swc.css");
+				head.load(cdnEndpoint + "css/bootstrap-custom-theme.min.css?v=1");
+				head.load("//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js");
+				head.load("//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js");
+				head.load("https://cdn.pendo.io/agent/static/f155f8f7-30b9-4cc3-671a-70f99f803504/pendo.js");
+				head.load("//cdn.jsdelivr.net/npm/moment@2.22.2/min/moment.min.js");
+				head.load("//cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.1.8/jsPlumb.min.js");
+				head.load("//cdnjs.cloudflare.com/ajax/libs/swfobject/2.2/swfobject.min.js");
+				head.load(cdnEndpoint + "js/jquery.tablesorter.min.js");
+				head.load(cdnEndpoint + "js/jquery.tablesorter.scinot.js");
+				head.load(cdnEndpoint + "icons/font/synapseicons.css?v=1");
+				head.load("//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css");
+				head.load(cdnEndpoint + "js/highlight.pack.js");
+				head.load(cdnEndpoint + "js/init-nchart.js");
+				head.load("//cdn.jsdelivr.net/markdown-it/6.0.0/markdown-it.min.js");
+				head.load(cdnEndpoint + "js/markdown-it-plugins-15.min.js");
+				head.load(cdnEndpoint + "js/polyfill-2.js");
+				head.load(cdnEndpoint + "js/details-shim.min.js");
+				head.load(cdnEndpoint + "js/xss.min.js");
+				head.load("//cdnjs.cloudflare.com/ajax/libs/pica/4.1.1/pica.min.js");
+				head.load("//www.google-analytics.com/analytics.js");
+				head.load("//unpkg.com/react@16/umd/react.production.min.js");
+				head.load("//unpkg.com/react-dom@16/umd/react-dom.production.min.js");
+				head.load("//cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.js");
+				head.load("//cdnjs.cloudflare.com/ajax/libs/spark-md5/3.0.0/spark-md5.min.js");
+				head.load(cdnEndpoint + "js/diff/diffview.css");
+				head.load(cdnEndpoint + "css/details-shim.min.css");
+				head.load("//cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.css");
+				head.load("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css");
+				head.load("//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css");
+				head.load(cdnEndpoint + "js/linkify.min.js");
+				head.load(cdnEndpoint + "js/linkify-string.min.js");
+			};
+			script.src = cdnEndpoint + "js/head.load.min.js";
+			document.head.appendChild(script);
+			
+			script = document.createElement('script');
+			script.src = cdnEndpoint + "js/compiled-closure-lib.js";
+			document.head.appendChild(script);
+			 
+			script = document.createElement('script');
+			script.src = cdnEndpoint + "Portal/Portal.nocache.js";
+			document.head.appendChild(script);
+			
+	   	</script>
+	</head>
+	<body id="body">
+		<div>
+			<!-- GWT history support -->
+			<iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position: absolute; width: 0; height: 0; border: 0"></iframe>
+			<div id="dropzone" class="dropzone" style="display: none;">
+				<h2 class="center" style="color:white; padding-top: 180px">
+					<span class="fa fa-cloud-upload"></span>
+					Drop files to upload
+				</h2>
+			</div>
+			<noscript>
+				<div
+					style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+					Your web browser must have JavaScript enabled in order for this
+					application to display correctly.<br /> If you are an automated web
+					crawler from a search engine, follow this <a
+						href="https://synapse.prod.sagebase.org/Portal.html#!Home:0">AJAX
+						application crawl link</a>
+				</div>
+			</noscript>
+            
+            <div style="display:none;">
+				<form id="login_form" target="hiddeniframe" role="form" class="signin-panel margin-top-15" method="post" action="/expect_405">
+					<input id="synapse_username" type="text" name="uname">
+					<input id="synapse_password" name="psw" type="password">
+					<button id="synapse_signin_btn" type="submit">Sign in</button>
+					<iframe name='hiddeniframe' style="display:none;"></iframe>
+				</form>
+            </div>
+            
+            <!-- This is the GWT-generated body -->
+			<div id="alertWrapper">
+				<div id="alertContainer"></div>
+			</div>
+			<div id="initialLoadingUI" style="padding-top: 180px">
+				<div class="spinner" style="width:80px; height:80px; background-size:80px 80px;"> </div>
+				<h4 style="color: #1e7098; margin-top: 10px; font-family: Sans-serif; text-align:center">Loading...</h4>
+			</div>
+			<div id="headerPanel" class="zeroOpacity"></div>
+			<div id="rootPanel" class="zeroOpacity"></div>
+			<div id="footerPanel"></div>
+		</div>
+		<div class="clear"></div>
+	</body>
+</html>

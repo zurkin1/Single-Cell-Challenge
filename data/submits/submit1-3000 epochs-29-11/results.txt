@@ -1,0 +1,28 @@
+Your submission "60genes.csv" (ID: 9681839) to the SCTC Subchallenge 1 has been scored:
+
+
+You prediction has been scored.  Here are your scores:
+
+score1: 0.4236
+score2: 0.4231
+score3: 0.2871
+
+Your submission "40genes.csv" (ID: 9681838) to the SCTC Subchallenge 2 has been scored:
+
+
+
+You prediction has been scored.  Here are your scores:
+
+score1: 0.4057
+score2: 0.4328
+score3: 0.2913
+
+Your submission "20genes.csv" (ID: 9681837) to the SCTC Subchallenge 3 has been scored:
+
+
+
+You prediction has been scored.  Here are your scores:
+
+score1: 0.3765
+score2: 0.3664
+score3: 0.3094

@@ -1,0 +1,364 @@
+<title>Documentation for gnumpy</title>
+<h1>Documentation for gnumpy</h1>
+<h3>Manual</h3>
+<b>Getting started</b><br><br>
+Use "import gnumpy", and/or "from gnumpy import &lt;what you put here is up to you&gt;"<ul>
+</ul>
+Module gnumpy contains class garray, which behaves much like numpy.ndarray<ul>
+</ul>
+Module gnumpy also contains methods like tile() and rand(), which behave like their numpy counterparts except that they deal with gnumpy.garray instances, instead of numpy.ndarray instances.<ul>
+</ul>
+Gnumpy imports Vlad's cudamat in order to use a GPU board, or failing that, imports Ilya's npmat in order to run everything in simulation mode, on the CPU.<ul>
+</ul>
+Don't touch cudamat (or gpu_lock) yourself. Gnumpy takes care of that. The first time you create a garray instance, gnumpy claims a gpu board.<ul>
+</ul>
+<br>
+<b>Switching from numpy to gnumpy</b><br><br>
+For some things you'll likely still use numpy<ul>
+<li>
+Example: arrays of integers.<ul>
+</ul>
+</li>
+<li>
+As a consequence, your code will have to deal with two types of arrays.<ul>
+</ul>
+</li>
+<li>
+To facilitate this, gnumpy includes many simple functions that work on both types of arrays.<ul>
+</ul>
+</li>
+<li>
+Operations over a specific dimension, or over the entire array: sum, mean, max, min, prod, std<ul>
+</ul>
+</li>
+<li>
+Elementwise operations: exp, log, logistic, sqrt, sign, isnan, isinf, log10<ul>
+</ul>
+</li>
+<li>
+When given a garray, they return a garray.<ul>
+</ul>
+</li>
+<li>
+When given a numpy array, they return a numpy array.<ul>
+</ul>
+</li>
+<li>
+The elementwise ones, when given a number, return a floating point number.<ul>
+</ul>
+</li>
+</ul>
+Avoiding unintended use of numpy arrays<ul>
+<li>
+Consider these statements: "from numpy import *; A = garray(range(12)); B = log(2)*A"<ul>
+</ul>
+</li>
+<li>
+Now, probably unexpectedly and undesirably, B is a numpy array.<ul>
+<li>
+The imported numpy.log() is a numpy procedure. It returns values not of type float, but of type numpy.float64 (though they don't look different).<ul>
+</ul>
+</li>
+<li>
+If you multiply a value of type numpy.float64 with a garray, numpy quietly does type casting and transforms the garray into a numpy array.<ul>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+To prevent this from happening without your knowledge, gnumpy refuses such implicit conversions.<ul>
+<li>
+If you want to, you can change that behavior by setting the system environment variable GNUMPY_IMPLICIT_CONVERSION to 'allow' or 'warn'.<ul>
+<li>
+If you want to allow it but see a warning if it happens, set that variable to 'warn'.<ul>
+</ul>
+</li>
+<li>
+If you want to allow such quiet conversions without a warning being shown, set it to 'allow'.<ul>
+</ul>
+</li>
+<li>
+If you don't set the variable at all, or set it to 'refuse', these implicit conversions will raise an exception.<ul>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+The quiet conversion to numpy arrays works by calling the __array__() method. That method will act according to the instruction in GNUMPY_IMPLICIT_CONVERSION<ul>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+If you want to convert a garray to a numpy array, you can always do it explicitly, using .as_numpy_array()<ul>
+</ul>
+</li>
+</ul>
+<br>
+<b>Advanced features</b><br><br>
+gnumpy.status() will show some basic information about the internal state of gnumpy.<ul>
+</ul>
+Gnumpy arrays can safely be used with pickle/cPickle.<ul>
+</ul>
+GPU memory usage debugging<ul>
+<li>
+The function gnumpy.memory_in_use() will tell you how much GPU memory you're using.<ul>
+</ul>
+</li>
+<li>
+The function gnumpy.memory_allocators() can tell you which lines of your code caused a lot of memory allocation.<ul>
+<li>
+Before you can use this, you have to set gnumpy.track_memory_usage=True. This enables data collection, which in disabled by default because it takes quite some time.<ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+Running on CPU vs. on GPU<ul>
+<li>
+Gnumpy can do all of its work on the CPU, if you ask it to or if there is a problem with the gpu setup.<ul>
+</ul>
+</li>
+<li>
+The system environment variable GNUMPY_USE_GPU, if present, controls this behavior.<ul>
+<li>
+value 'auto', or this variable not existing, means that gnumpy runs on a gpu if the gpu setup works, but on the cpu if there's a problem with the gpu setup.<ul>
+</ul>
+</li>
+<li>
+value 'yes' means that gnumpy runs on a gpu. If that doesn't work, it's an error.<ul>
+</ul>
+</li>
+<li>
+value 'no' means that gnumpy runs on the cpu.<ul>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+When you run on the CPU, you can choose the numerical precision: 32 bit (i.e. same as the gpu), 64 bit (the typical cpu precision), or 128 bit (high precision).<ul>
+<li>
+Environment variable GNUMPY_CPU_PRECISION, if present, controls this behavior. Its value has to be one of 32 (default), 64, or 128.<ul>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+Running on the cpu, with st least 64 bit precision, may be necessary in order to do gradient checks with finite difference approximations.<ul>
+</ul>
+</li>
+</ul>
+Logistic function<ul>
+<li>
+The standard implementation of the logistic function, "1 / (1 + (-x).exp())", is not very fast.<ul>
+</ul>
+</li>
+<li>
+There is a direct implementation that's faster: x.logistic()  or  gnumpy.logistic(x)<ul>
+</ul>
+</li>
+</ul>
+Telling gnumpy which GPU board to use<ul>
+<li>
+This section is irrelevant if your machine has only one GPU board.<ul>
+</ul>
+</li>
+<li>
+The default way gnumpy chooses a board is by asking Iain Murray's gpu_lock to pick one.<ul>
+<li>
+If your system doesn't have gpu_lock installed, then gnumpy prints a warning and simply uses board #0.<ul>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+You can change this behavior by setting gnumpy.board_id_to_use after importing gnumpy and before creating any garray's.<ul>
+<li>
+You can set it to an integer to specify which board to use.<ul>
+</ul>
+</li>
+<li>
+Alternatively, you can set it to a function (which takes no arguments). That function will be called when you first create a garray, and it is expected to return an integer: the board id to use.<ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+More time-consuming error checking<ul>
+<li>
+Gnumpy does lots of error checking. Some of those checks, however, can take up quite a bit of time.<ul>
+</ul>
+</li>
+<li>
+You can tell gnumpy whether or not to perform the most time-consuming checks.<ul>
+</ul>
+</li>
+<li>
+The variable gnumpy.expensive_check_probability can be set to 0 (never check), 1 (always check), or anything in between (check randomly, with that probability).<ul>
+</ul>
+</li>
+<li>
+By default, its value is 1 (i.e. all checks are always performed).<ul>
+</ul>
+</li>
+</ul>
+The special values inf and nan<ul>
+<li>
+If you want gnumpy to check whether any nans or infs are created, set gnumpy.acceptable_number_types to "no nans" or to "no nans or infs".<ul>
+</ul>
+</li>
+<li>
+This way, gnumpy will check the result of most operations, and if it finds undesirable values, it raises a GnumpyNumberTypeException.<ul>
+</ul>
+</li>
+<li>
+If you want to disable the checks, restore gnumpy.acceptable_number_types to its default value, which is "anything goes".<ul>
+</ul>
+</li>
+<li>
+To specify in more detail what to check, there's gnumpy.dont_check_number_types_in_non_garrays, which by default is set to True.<ul>
+</ul>
+</li>
+</ul>
+<br>
+<b>Known issues</b><br><br>
+As of 2010-05-21, cudamat has some bugs in dealing with really large arrays. Not all of those have been worked around in gnumpy.<ul>
+</ul>
+As of 2010-05-16, cudamat has some bugs in dealing with arrays of size zero. Not all of those have been worked around in gnumpy.<ul>
+</ul>
+Creating a numpy array from a tuple that includes garray's is terribly slow, and interrupting it results in a segfault.<ul>
+<li>
+It's only when you're creating a numpy array from a *tuple* of arrays.<ul>
+</ul>
+</li>
+<li>
+The reason is that numpy array construction from tuples uses a loop to get the elements from the arrays.<ul>
+</ul>
+</li>
+<li>
+If you know where in your code this is happening, I suggest that you instead create a garray from that tuple of arrays. That is fast. If you want a numpy array, you can get one from that garray using .as_numpy_array()<ul>
+</ul>
+</li>
+</ul>
+Some numpy features are not (yet) implemented. You'll see a NotImplemented exception if you try to use them. Please let me know if this happens, and I'll try to implement that specific feature.<ul>
+</ul>
+If you ever see an error message from cudamat, then I consider that a bug and I would like to know about it.<ul>
+</ul>
+<br>
+<br>
+<h3>Differences from numpy ndarrays</h3>
+<b>Aliasing</b><br><br>
+This section is only relevant if you like editing your arrays (using operators like += or slice assign).<ul>
+</ul>
+In numpy, many operations don't copy the data to a new array, but only make a reference a.k.a. alias.<ul>
+<li>
+Thus, if you edit the data in the alias, you're also editing the data in the original, and vice versa.<ul>
+</ul>
+</li>
+<li>
+Examples of aliasing operations: transpose, slice, reshape.<ul>
+</ul>
+</li>
+</ul>
+In gnumpy, there are three operations that create an alias:<ul>
+<li>
+Slicing (with step 1, i.e. using at most one colon), along the first dimension (in matrices that means selecting some complete rows). E.g. 'A[3:6]' or 'A[-1]'<ul>
+</ul>
+</li>
+<li>
+Reshaping<ul>
+</ul>
+</li>
+<li>
+Shallow copying, i.e. "garray(other_garray, copy=False)"<ul>
+</ul>
+</li>
+<li>
+Everything else, such as using A.T, makes a copy of the data.<ul>
+</ul>
+</li>
+</ul>
+Note: slice assignment "A[:,3]=B" has nothing to do with aliasing, and works exactly like in numpy.<ul>
+<li>
+The syntactic difference is important.<ul>
+</ul>
+</li>
+<li>
+If the slicing operation is on the left side of an assignment statement, it's called slice assignment and it has nothing to do with aliasing.<ul>
+</ul>
+</li>
+<li>
+If the slicing operation is not on the left side of an assignment statement, it's called an expression and aliasing might be relevant.<ul>
+</ul>
+</li>
+<li>
+Example: "A[:,3] = B" works like in numpy, because it's slice assignment.<ul>
+</ul>
+</li>
+<li>
+Example: "temp=A[:,3]; temp[:]=B" does not work like in numpy, because it's a non-aliasing expression followed by an assignment.<ul>
+</ul>
+</li>
+<li>
+Example: "temp=A[3,:]; temp[:]=B" works like in numpy, because the expression is a row slice and therefore DOES alias, like in numpy.<ul>
+</ul>
+</li>
+</ul>
+<br>
+<b>All data is of type float32.</b><br><br>
+However, there are some boolean operotors. Those use 1.0 to represent True, and 0.0 to represent False.<ul>
+</ul>
+Note that 32 bit might not be enough for finite difference gradient approximations. To do those, you may have to run in simulation mode, with high numerical precision.<ul>
+</ul>
+Because there is only one data type, some comparisons to non-number data, like "A &lt; None", might raise an exception (in numpy they don't).<ul>
+</ul>
+<br>
+<b>Not all numpy operations are supported yet.</b><br><br>
+For example, cosines and argmax are not yet supported. Simple slice assignment is supported, but slice assignment using a stride other than 1 is not supported.<ul>
+</ul>
+Changing array shape by "A.shape = (3,4)" should be avoided. Instead use "A = A.reshape((3,4))".<ul>
+</ul>
+When you try to use a feature that's missing, you'll either not be able to find a method for it, or your program will crash with a NotImplemented exception that describes which feature is missing.<ul>
+</ul>
+However, if you need (read: "would like") one of the missing features to be implemented, let me know and maybe you'll have it one hour later.<ul>
+</ul>
+Do realize, though, that a gpu cannot do everything faster than the cpu. <ul>
+<li>
+Even some tasks that a gpu could perform quickly might not be fast in gnumpy, if cudamat does not support them.<ul>
+</ul>
+</li>
+</ul>
+<br>
+<br>
+<h3>Differences from cudamat. Some features behave more like numpy.ndarray:</h3>
+Gnumpy supports "A=B+C" notation. "A" will be a newly created array.<ul>
+</ul>
+garray objects have arbitrary dimensionality, and broadcasting for binary operators.<ul>
+</ul>
+<b>Data is stored in row-major order ("C" order). This means that row slices are cheaper than column slices (row slices are simply aliases).</b><br><br>
+Here, technically speaking, "row" means the first axis.<ul>
+</ul>
+<br>
+<br>
+<h3>Execution speed</h3>
+Gnumpy is reasonably (but not maximally) optimized.<ul>
+</ul>
+If you profile a program that uses gnumpy and you find an opportunity for efficiency improvement, PLEASE let me know!<ul>
+</ul>
+If you make a program run much faster by using cudamat directly, PLEASE let me know.<ul>
+</ul>
+<b>Some things are slow on a gpu</b><br><br>
+Rule of thumb: anything that's simple is fast on the gpu; complicated operations may well be faster on the cpu.<ul>
+<li>
+Elementwise operations are fast on the gpu, especially if they don't involve division or more complicated operations like cosine<ul>
+</ul>
+</li>
+<li>
+Matrix multiplies are fast on a gpu, but there is some overhead in starting them up, so multiplying 5x5 matrices is probably faster on the cpu.<ul>
+</ul>
+</li>
+</ul>
+The second rule: if you care about execution speed and want to make a wise choice, just try both alternatives, with a stopwatch.<ul>
+</ul>
+<br>
+<br>
