@@ -1,4 +1,4 @@
-# Single-cell-challenge
+# Single-Cell-Challenge
 
 ![Single-cell challenge](data/image.png)
 
