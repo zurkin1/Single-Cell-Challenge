@@ -1,6 +1,6 @@
 # Single-Cell-Challenge
 
-![Single-cell challenge](data/image.png)
+![[Single-cell challenge](https://www.synapse.org/#!Synapse:syn15665609/wiki/582909)](data/image.png)
 
 ## Overview
 Single-cell sequencing technologies are rapidly evolving. In particular, although suspension single-cell RNA sequencing has become high-throughput, it loses the spatial information encoded in the position of a cell from a tissue or organism.
