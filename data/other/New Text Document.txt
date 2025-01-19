@@ -1,5 +1,0 @@
-http://www.gene2function.org/search/get_ortholog/7227/36288/best_match
-http://www.gene2function.org/search/get_ortholog/7227/43023/best_match
-http://www.gene2function.org/search/get_ortholog/7227/43023/best_match
-http://www.gene2function.org/search/get_ortholog/7227/39085/best_match
-http://www.gene2function.org/search/show_go_heatmap/7227/39085/best_match
